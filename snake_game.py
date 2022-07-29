@@ -11,7 +11,7 @@ wind.title("Snake Game")
 wind.bgcolor("#34c9eb")
 wind.setup(width=600, height=600)
 
-snake_head = turtle.Turtle()
+snake_head = turtle.Tartle()
 snake_head.speed(0)
 snake_head.penup()
 snake_head.shape("square")
