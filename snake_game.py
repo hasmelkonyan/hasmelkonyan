@@ -28,7 +28,6 @@ def create_food():
     food.penup()
     food.shape("circle")
     food.color("red")
-    food.goto(random.randrange(-280, 280, 20), random.randrange(-280, 280, 20))
     return food
 
 
@@ -52,7 +51,6 @@ pen.goto(0, 250)
 
 
 def go_up():
-
     """changes the direction of the snake's head upwards
     """
 
@@ -69,8 +67,8 @@ def go_down():
         snake_head.direction = "down"
 
 
-def go_left():
 
+def go_left():
     """changes the direction of the snake's head to the left
     """
 
@@ -79,7 +77,6 @@ def go_left():
 
 
 def go_right():
-
     """changes the direction of the snake's head to the right
     """
 
@@ -88,7 +85,6 @@ def go_right():
 
 
 def move():
-
     """moves the snake in a given direction
     """
 
@@ -104,13 +100,12 @@ def move():
 
 wind.listen()
 wind.onkeypress(go_up, "Up")
-wind.onkeypress(go_up, "Down")
+wind.onkeypress(go_down, "Down")
 wind.onkeypress(go_left, "Left")
 wind.onkeypress(go_right, "Right")
 
 
 def is_game_over(head, lst):
-
     """game end conditions
     """
 
@@ -125,10 +120,11 @@ def is_game_over(head, lst):
 def play():
     global highest_score
     score = 0
-    delay_time = 0.4
     snake_body = []
     food = create_food()
+    food.goto(0, 100)
     while True:
+        delay_time = 0.4
         wind.update()
         if not is_game_over(snake_head, snake_body):
             pen.clear()
@@ -137,14 +133,15 @@ def play():
             if snake_head.distance(food) < 20:
                 snake_body.append(create_tail())
                 score += 1
-                create_food()
+                food.goto(random.randrange(-280, 280, 20), random.randrange(-280, 280, 20))
 
             if score > 0 and score % 10 == 0 and delay_time > 0:
                 delay_time -= 0.1
 
-            for i in range(len(snake_body) - 1, -1, -1):
-                if i > 0:
-                    snake_body[i].goto(snake_body[i - 1].xcor(), snake_body[i - 1].ycor())
+            if len(snake_body) > 0:
+                for i in range(len(snake_body) - 1, -1, -1):
+                    if i > 0:
+                        snake_body[i].goto(snake_body[i - 1].xcor(), snake_body[i - 1].ycor())
                 else:
                     snake_body[0].goto(snake_head.xcor(), snake_head.ycor())
         else:
@@ -152,12 +149,12 @@ def play():
                 highest_score = score
             time.sleep(1)
             snake_head.goto(0, 0)
+            score = 0
             snake_body.clear()
             snake_head.direction = "Stop"
+            food.goto(0, 100)
             pen.clear()
             pen.write(f"Score : {score}   Highest Score : {highest_score}", align="center", font=("caddr", 20, "bold"))
-            play()
-
         move()
         time.sleep(delay_time)
 
