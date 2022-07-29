@@ -150,6 +150,8 @@ def play():
             time.sleep(1)
             snake_head.goto(0, 0)
             score = 0
+            for each in snake_body:
+                each.goto(500, 500)
             snake_body.clear()
             snake_head.direction = "Stop"
             food.goto(0, 100)
