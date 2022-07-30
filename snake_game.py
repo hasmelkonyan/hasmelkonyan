@@ -114,7 +114,7 @@ def play():
     food = create_food()
     food.goto(0, 100)
     while True:
-        delay_time = 0.4
+        delay_time = 0.2
         wind.update()
         if not is_game_over(snake_head, snake_body):
             pen.clear()
@@ -124,9 +124,6 @@ def play():
                 snake_body.append(create_tail())
                 score += 1
                 food.goto(random.randrange(-280, 280, 20), random.randrange(-280, 280, 20))
-
-            if score > 0 and score % 10 == 0 and delay_time > 0:
-                delay_time -= 0.1
 
             if len(snake_body) > 0:
                 for i in range(len(snake_body) - 1, -1, -1):
