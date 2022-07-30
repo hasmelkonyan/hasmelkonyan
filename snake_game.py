@@ -118,6 +118,7 @@ def play():
         wind.update()
         if not is_game_over(snake_head, snake_body):
             pen.clear()
+            wind.tracer(0)
             pen.write(f"Score : {score}   Highest Score : {highest_score}", align="center", font=("caddr", 20, "bold"))
 
             if snake_head.distance(food) < 20:
