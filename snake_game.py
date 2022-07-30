@@ -114,18 +114,19 @@ def play():
     food = create_food()
     food.goto(0, 100)
     while True:
-        delay_time = 0.2
+        delay_time = 0.4
         wind.update()
         if not is_game_over(snake_head, snake_body):
             pen.clear()
             wind.tracer(0)
             pen.write(f"Score : {score}   Highest Score : {highest_score}", align="center", font=("caddr", 20, "bold"))
-
+            # snake eats the food
             if snake_head.distance(food) < 20:
                 snake_body.append(create_tail())
                 score += 1
                 food.goto(random.randrange(-280, 280, 20), random.randrange(-280, 280, 20))
-
+                delay_time -= 0.01
+            # snake's body is increasing
             if len(snake_body) > 0:
                 for i in range(len(snake_body) - 1, -1, -1):
                     if i > 0:
@@ -139,14 +140,16 @@ def play():
         else:
             time.sleep(1)
             snake_head.goto(0, 0)
-            score = 0
             for each in snake_body:
-                each.goto(500, 500)
+                each.goto(600, 600)
             snake_body.clear()
             snake_head.direction = "Stop"
             food.goto(0, 100)
             pen.clear()
-            pen.write(f"Score : {score}   Highest Score : {highest_score}", align="center", font=("caddr", 20, "bold"))
+            pen.write(f"GAME OVER: Your score is : {score}   Highest Score : {highest_score}", align="center",
+                      font=("caddr", 15, "bold"))
+            score = 0
+            time.sleep(5)
         move()
         time.sleep(delay_time)
 
